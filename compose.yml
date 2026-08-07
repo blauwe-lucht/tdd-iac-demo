@@ -1,0 +1,24 @@
+services:
+  vm1:
+    build: .
+    container_name: demo-vm1
+    hostname: vm1
+    privileged: true
+    cgroup: host
+    tmpfs:
+      - /tmp
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /lib/systemd/systemd
+    networks:
+      ansible-demo:
+        ipv4_address: 172.28.0.11
+
+networks:
+  ansible-demo:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
