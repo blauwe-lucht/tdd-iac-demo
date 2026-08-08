@@ -8,7 +8,7 @@ This demo only covers configuration. It uses [Ansible](https://ansible.com) for 
 [Cinc Auditor](https://cinc.sh/docs/auditor/) to perform tests.
 
 The subject of this demo is a fake VM: a Docker container acting like a VM. Using a Docker container instead of
-a VM makes it much faster to repeat certain actions.
+a VM makes it much faster to repeat certain actions. We'll be configuring this VM using Ansible with SSH.
 
 ## Instructions
 
