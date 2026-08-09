@@ -1,6 +1,8 @@
 services:
   vm1:
-    build: .
+    build:
+      context: .
+      dockerfile: v1/Dockerfile
     container_name: demo-vm1
     hostname: vm1
     privileged: true
