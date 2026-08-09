@@ -1,7 +1,0 @@
-name: nginx
-title: nginx configuration tests
-maintainer: tdd-iac-demo
-summary: Verifies the demo-vm is configured to serve web traffic with nginx
-version: 1.0.0
-supports:
-  - platform: debian

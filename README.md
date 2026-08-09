@@ -19,3 +19,9 @@ a VM makes it much faster to repeat certain actions. We'll be configuring this V
 ./run-tests.sh
 ./teardown.sh
 ```
+
+## Ideas
+
+- Have a working playbook with green tests. Then switch to an updated fresh VM, handed to you by another department.
+  This VM has firewall enabled that blocks everything by default. The playbook runs successfully but you can't reach
+  the page.

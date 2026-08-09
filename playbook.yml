@@ -15,3 +15,22 @@
         name: nginx
         state: started
         enabled: true
+
+    - name: Replace the default index page with a neutral one
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8">
+              <title>Welcome</title>
+            </head>
+            <body>
+              <h1>It works.</h1>
+              <p>This site is up and running.</p>
+            </body>
+          </html>
+        owner: root
+        group: root
+        mode: "0644"

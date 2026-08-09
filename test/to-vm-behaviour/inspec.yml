@@ -1,0 +1,10 @@
+name: to-vm-behaviour
+title: Behaviour, observed from an external client
+maintainer: tdd-iac-demo
+summary: >-
+  Exercises the running server across the network, from off-box (the test
+  runner acts as a client). Catches everything the from-vm probe catches PLUS
+  reachability problems it cannot see: loopback-only binds (listen 127.0.0.1),
+  firewalls, wrong exposed port. Closest to a real user's experience.
+version: 1.0.0
+# Runs on the host as an external client, so it is not tied to the VM's OS.

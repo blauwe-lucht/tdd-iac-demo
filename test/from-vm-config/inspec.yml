@@ -1,0 +1,11 @@
+name: from-vm-config
+title: Configuration, observed from the VM
+maintainer: tdd-iac-demo
+summary: >-
+  Asserts the DECLARED state on the box: package installed, service enabled,
+  and the index file on disk is the neutral page. Passes whenever the playbook
+  ran green -- even when the running server returns something else. Says
+  nothing about what the VM actually serves to a client.
+version: 1.0.0
+supports:
+  - platform: debian
