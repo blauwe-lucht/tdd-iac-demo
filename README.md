@@ -17,7 +17,20 @@ a VM makes it much faster to repeat certain actions. We'll be configuring this V
 ./run-tests.sh
 ./run-playbook.sh
 ./run-tests.sh
-./teardown.sh
+```
+
+Update compose.yml to use v2, then
+
+```bash
+./reset.sh
+./run-playbook.sh
+./run-tests.sh
+```
+
+To clean up:
+
+```bash
+./cleanup.sh
 ```
 
 ## Ideas
@@ -25,3 +38,5 @@ a VM makes it much faster to repeat certain actions. We'll be configuring this V
 - Have a working playbook with green tests. Then switch to an updated fresh VM, handed to you by another department.
   This VM has firewall enabled that blocks everything by default. The playbook runs successfully but you can't reach
   the page.
+- Add one or two improvements using TDD: custom 404 page, health endpoint
+- Refactor: move inline index.html to file.
