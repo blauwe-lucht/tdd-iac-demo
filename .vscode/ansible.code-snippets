@@ -1,0 +1,23 @@
+{
+  "Fix firewall: open HTTP/80 in nftables": {
+    "scope": "yaml,ansible",
+    "prefix": "an.fix-firewall",
+    "description": "Ansible tasks that open HTTP/80 through the default-deny nftables firewall and reload it. Drop under 'tasks:' in playbook.yml.",
+    "body": [
+      "- name: Allow HTTP/80 through the firewall",
+      "  ansible.builtin.lineinfile:",
+      "    path: /etc/nftables.conf",
+      "    insertafter: 'tcp dport 22 accept'",
+      "    line: '        tcp dport 80 accept'",
+      "    state: present",
+      "  register: nftables_rule_result",
+      "",
+      "- name: Reload nftables so the new rule takes effect",
+      "  ansible.builtin.service:",
+      "    name: nftables",
+      "    state: reloaded",
+      "  when: nftables_rule_result.changed  # noqa: no-handler",
+      "$0"
+    ]
+  }
+}
