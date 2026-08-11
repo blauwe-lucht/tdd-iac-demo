@@ -1,0 +1,24 @@
+{
+  "Config test: firewall declares HTTP/80 open": {
+    "scope": "ruby",
+    "prefix": "in.add-firewall-config",
+    "description": "InSpec from-vm-config control asserting the nftables config declares HTTP/80 open. Add to test/from-vm-config/controls/config.rb.",
+    "body": [
+      "control 'firewall-allows-http-80' do",
+      "  impact 1.0",
+      "  title 'the firewall config declares HTTP/80 open'",
+      "  desc <<~DESC",
+      "    Pure configuration: the declared nftables ruleset accepts inbound tcp/80.",
+      "    This says nothing about whether the running firewall is actually loaded",
+      "    with this rule -- only that the playbook wrote it.",
+      "  DESC",
+      "",
+      "  describe file('/etc/nftables.conf') do",
+      "    it { should exist }",
+      "    its('content') { should match(/tcp dport 80 accept/) }",
+      "  end",
+      "end",
+      "$0"
+    ]
+  }
+}
