@@ -40,3 +40,37 @@ To clean up:
   the page.
 - Add one or two improvements using TDD: custom 404 page, health endpoint
 - Refactor: move inline index.html to file.
+
+## TDD demo: `is_valid_bucket_name`
+
+[`tdd-python/`](tdd-python) contains a prerendered, step-by-step TDD kata that builds up a function validating S3
+bucket names. Each `step-NN` directory is a complete, runnable snapshot: `test_bucket_name.py` plus
+`bucket_name.py`. Every step is either RED (a failing test drives the next bit of behaviour) or GREEN (the simplest
+implementation that satisfies all tests so far) — running `pytest` inside a step directory always compiles and
+always reports a clear pass/fail, never a crash. The matching [VS Code snippets](.vscode/tdd-bucket-demo.code-snippets)
+(`py.step-01` .. `py.step-16`) let you type the same progression live instead of jumping between directories.
+
+| Step | State | What changes |
+| --- | --- | --- |
+| [01](tdd-python/step-01) | RED | Test: empty string is invalid |
+| [02](tdd-python/step-02) | GREEN | Impl: dumbest possible (`return False`) |
+| [03](tdd-python/step-03) | RED | Test: a real name should be valid |
+| [04](tdd-python/step-04) | GREEN | Impl: any non-empty name is valid |
+| [05](tdd-python/step-05) | RED | Test: shorter than 3 chars is invalid |
+| [06](tdd-python/step-06) | GREEN | Impl: enforce minimum length |
+| [07](tdd-python/step-07) | RED | Test: longer than 63 chars is invalid |
+| [08](tdd-python/step-08) | GREEN | Impl: enforce length range (3–63) |
+| [09](tdd-python/step-09) | RED | Test: uppercase letters are invalid |
+| [10](tdd-python/step-10) | GREEN | Impl: enforce lowercase |
+| [11](tdd-python/step-11) | RED | Test: underscore is invalid |
+| [12](tdd-python/step-12) | GREEN | Impl: allowed-characters regex (ugly one-liner) |
+| [13](tdd-python/step-13) | RED (surprise) | Refactor into named helpers — introduces a `.match` vs `.fullmatch` bug |
+| [14](tdd-python/step-14) | GREEN | Fix: `.match` → `.fullmatch` |
+| [15](tdd-python/step-15) | RED | Test: a name shaped like an IP address is invalid |
+| [16](tdd-python/step-16) | GREEN | Impl: final version, ready to pivot to IaC |
+
+Run any step's tests with:
+
+```bash
+pytest tdd-python/step-01
+```

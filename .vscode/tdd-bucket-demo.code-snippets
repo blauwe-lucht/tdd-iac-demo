@@ -10,16 +10,16 @@
     ]
   },
 
-  "Step 01 - Test: happy path": {
+  "Step 01 - Test: empty string": {
     "prefix": "py.step-01",
     "scope": "python",
     "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: function does not exist yet",
     "body": [
       "",
-      "def test_simple_lowercase_name_is_valid():",
-      "    result = is_valid_bucket_name(\"my-bucket\")",
+      "def test_empty_string_is_invalid():",
+      "    result = is_valid_bucket_name(\"\")",
       "",
-      "    assert result is True",
+      "    assert result is False",
       "$0"
     ]
   },
@@ -30,13 +30,38 @@
     "description": "-> bucket_name.py, SELECT ALL first. GREEN: obviously wrong, tests do not know it yet",
     "body": [
       "def is_valid_bucket_name(name: str) -> bool:",
-      "    return True",
+      "    return False",
       "$0"
     ]
   },
 
-  "Step 03 - Test: minimum length": {
+  "Step 03 - Test: acceptable name": {
     "prefix": "py.step-03",
+    "scope": "python",
+    "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: a real name should be valid",
+    "body": [
+      "",
+      "def test_simple_lowercase_name_is_valid():",
+      "    result = is_valid_bucket_name(\"my-bucket\")",
+      "",
+      "    assert result is True",
+      "$0"
+    ]
+  },
+
+  "Step 04 - Impl: any non-empty name": {
+    "prefix": "py.step-04",
+    "scope": "python",
+    "description": "-> bucket_name.py, SELECT ALL first. GREEN: still not a real requirement, motivates the next test",
+    "body": [
+      "def is_valid_bucket_name(name: str) -> bool:",
+      "    return len(name) > 0",
+      "$0"
+    ]
+  },
+
+  "Step 05 - Test: minimum length": {
+    "prefix": "py.step-05",
     "scope": "python",
     "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: shorter than 3 chars is invalid",
     "body": [
@@ -49,8 +74,8 @@
     ]
   },
 
-  "Step 04 - Impl: minimum length": {
-    "prefix": "py.step-04",
+  "Step 06 - Impl: minimum length": {
+    "prefix": "py.step-06",
     "scope": "python",
     "description": "-> bucket_name.py, SELECT ALL first. GREEN",
     "body": [
@@ -60,8 +85,8 @@
     ]
   },
 
-  "Step 05 - Test: maximum length": {
-    "prefix": "py.step-05",
+  "Step 07 - Test: maximum length": {
+    "prefix": "py.step-07",
     "scope": "python",
     "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: longer than 63 chars is invalid (skippable cycle)",
     "body": [
@@ -76,8 +101,8 @@
     ]
   },
 
-  "Step 06 - Impl: length range": {
-    "prefix": "py.step-06",
+  "Step 08 - Impl: length range": {
+    "prefix": "py.step-08",
     "scope": "python",
     "description": "-> bucket_name.py, SELECT ALL first. GREEN",
     "body": [
@@ -87,8 +112,8 @@
     ]
   },
 
-  "Step 07 - Test: lowercase only": {
-    "prefix": "py.step-07",
+  "Step 09 - Test: lowercase only": {
+    "prefix": "py.step-09",
     "scope": "python",
     "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: uppercase is invalid",
     "body": [
@@ -101,8 +126,8 @@
     ]
   },
 
-  "Step 08 - Impl: lowercase check": {
-    "prefix": "py.step-08",
+  "Step 10 - Impl: lowercase check": {
+    "prefix": "py.step-10",
     "scope": "python",
     "description": "-> bucket_name.py, SELECT ALL first. GREEN",
     "body": [
@@ -112,8 +137,8 @@
     ]
   },
 
-  "Step 09 - Test: allowed characters": {
-    "prefix": "py.step-09",
+  "Step 11 - Test: allowed characters": {
+    "prefix": "py.step-11",
     "scope": "python",
     "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: underscore is invalid",
     "body": [
@@ -126,13 +151,12 @@
     ]
   },
 
-  "Step 10 - Impl: ugly one-liner": {
-    "prefix": "py.step-10",
+  "Step 12 - Impl: ugly one-liner": {
+    "prefix": "py.step-12",
     "scope": "python",
     "description": "-> bucket_name.py, SELECT ALL first. GREEN: strains readability, motivates the refactor",
     "body": [
       "import re",
-      "",
       "",
       "def is_valid_bucket_name(name: str) -> bool:",
       "    return (",
@@ -144,8 +168,8 @@
     ]
   },
 
-  "Step 11 - Refactor with hidden bug": {
-    "prefix": "py.step-11",
+  "Step 13 - Refactor with hidden bug": {
+    "prefix": "py.step-13",
     "scope": "python",
     "description": "-> bucket_name.py, SELECT ALL first. RED (surprise): '.match' instead of '.fullmatch'",
     "body": [
@@ -153,14 +177,11 @@
       "",
       "ALLOWED_CHARACTERS = re.compile(r\"[a-z0-9.-]+\")",
       "",
-      "",
       "def is_valid_bucket_name(name: str) -> bool:",
       "    return has_valid_length(name) and has_valid_characters(name)",
       "",
-      "",
       "def has_valid_length(name: str) -> bool:",
       "    return 3 <= len(name) <= 63",
-      "",
       "",
       "def has_valid_characters(name: str) -> bool:",
       "    return ALLOWED_CHARACTERS.match(name) is not None",
@@ -168,8 +189,8 @@
     ]
   },
 
-  "Step 12 - Fix the refactor bug": {
-    "prefix": "py.step-12",
+  "Step 14 - Fix the refactor bug": {
+    "prefix": "py.step-14",
     "scope": "python",
     "description": "OPTIONAL SNIPPET: better to type the fix live (match -> fullmatch). -> bucket_name.py, SELECT ALL first. GREEN",
     "body": [
@@ -177,14 +198,11 @@
       "",
       "ALLOWED_CHARACTERS = re.compile(r\"[a-z0-9.-]+\")",
       "",
-      "",
       "def is_valid_bucket_name(name: str) -> bool:",
       "    return has_valid_length(name) and has_valid_characters(name)",
       "",
-      "",
       "def has_valid_length(name: str) -> bool:",
       "    return 3 <= len(name) <= 63",
-      "",
       "",
       "def has_valid_characters(name: str) -> bool:",
       "    return ALLOWED_CHARACTERS.fullmatch(name) is not None",
@@ -192,8 +210,8 @@
     ]
   },
 
-  "Step 13 - Test: IP address shape": {
-    "prefix": "py.step-13",
+  "Step 15 - Test: IP address shape": {
+    "prefix": "py.step-15",
     "scope": "python",
     "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: names shaped like an IP are invalid",
     "body": [
@@ -206,8 +224,8 @@
     ]
   },
 
-  "Step 14 - Impl: final version": {
-    "prefix": "py.step-14",
+  "Step 16 - Impl: final version": {
+    "prefix": "py.step-16",
     "scope": "python",
     "description": "-> bucket_name.py, SELECT ALL first. GREEN: end state, pivot to IaC",
     "body": [
@@ -216,7 +234,6 @@
       "ALLOWED_CHARACTERS = re.compile(r\"[a-z0-9.-]+\")",
       "IP_ADDRESS_SHAPE = re.compile(r\"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\")",
       "",
-      "",
       "def is_valid_bucket_name(name: str) -> bool:",
       "    return (",
       "        has_valid_length(name)",
@@ -224,14 +241,11 @@
       "        and not looks_like_ip_address(name)",
       "    )",
       "",
-      "",
       "def has_valid_length(name: str) -> bool:",
       "    return 3 <= len(name) <= 63",
       "",
-      "",
       "def has_valid_characters(name: str) -> bool:",
       "    return ALLOWED_CHARACTERS.fullmatch(name) is not None",
-      "",
       "",
       "def looks_like_ip_address(name: str) -> bool:",
       "    return IP_ADDRESS_SHAPE.fullmatch(name) is not None",

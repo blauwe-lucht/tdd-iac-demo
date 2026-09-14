@@ -1,4 +1,3 @@
 .ansible
 *.log
 __pycache__
-/tdd-python
