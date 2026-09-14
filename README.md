@@ -69,7 +69,7 @@ always reports a clear pass/fail, never a crash. The matching [VS Code snippets]
 | [15](tdd-python/step-15) | RED | Test: digits should be valid |
 | [16](tdd-python/step-16) | GREEN | Impl: allow digits too (still a simple character check) |
 | [17](tdd-python/step-17) | RED (surprise) | Refactor: character checks become a regex — first-time mistake: `.match` instead of `.fullmatch` |
-| [18](tdd-python/step-18) | GREEN | Fix: `.match` → `.fullmatch` |
+| [18](tdd-python/step-18) | GREEN | Fix: `.match` → `.fullmatch` (spot another optimization, see abstractions) |
 | [19](tdd-python/step-19) | GREEN | Refactor: split into named helper functions (no new test, regex was already correct) |
 | [20](tdd-python/step-20) | RED | Test: a name shaped like an IP address is invalid |
 | [21](tdd-python/step-21) | GREEN | Impl: final version, ready to pivot to IaC |
