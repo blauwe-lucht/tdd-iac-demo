@@ -6,7 +6,7 @@ def test_empty_string_is_invalid():
     assert result is False
 
 def test_simple_lowercase_name_is_valid():
-    result = is_valid_bucket_name("my-bucket")
+    result = is_valid_bucket_name("mybucket")
 
     assert result is True
 
@@ -32,7 +32,12 @@ def test_name_with_underscore_is_invalid():
 
     assert result is False
 
-def test_name_formatted_as_ip_address_is_invalid():
-    result = is_valid_bucket_name("192.168.1.1")
+def test_name_with_hyphen_is_valid():
+    result = is_valid_bucket_name("my-bucket")
 
-    assert result is False
+    assert result is True
+
+def test_name_with_digits_is_valid():
+    result = is_valid_bucket_name("my-bucket-1")
+
+    assert result is True

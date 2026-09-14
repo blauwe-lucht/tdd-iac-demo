@@ -41,3 +41,8 @@ def test_name_with_digits_is_valid():
     result = is_valid_bucket_name("my-bucket-1")
 
     assert result is True
+
+def test_name_formatted_as_ip_address_is_invalid():
+    result = is_valid_bucket_name("192.168.1.1")
+
+    assert result is False

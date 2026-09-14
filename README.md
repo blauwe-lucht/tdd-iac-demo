@@ -48,13 +48,13 @@ bucket names. Each `step-NN` directory is a complete, runnable snapshot: `test_b
 `bucket_name.py`. Every step is either RED (a failing test drives the next bit of behaviour) or GREEN (the simplest
 implementation that satisfies all tests so far) — running `pytest` inside a step directory always compiles and
 always reports a clear pass/fail, never a crash. The matching [VS Code snippets](.vscode/tdd-bucket-demo.code-snippets)
-(`py.step-01` .. `py.step-16`) let you type the same progression live instead of jumping between directories.
+(`py.step-01` .. `py.step-21`) let you type the same progression live instead of jumping between directories.
 
 | Step | State | What changes |
 | --- | --- | --- |
 | [01](tdd-python/step-01) | RED | Test: empty string is invalid |
 | [02](tdd-python/step-02) | GREEN | Impl: dumbest possible (`return False`) |
-| [03](tdd-python/step-03) | RED | Test: a real name should be valid |
+| [03](tdd-python/step-03) | RED | Test: a real name (`mybucket`) should be valid |
 | [04](tdd-python/step-04) | GREEN | Impl: any non-empty name is valid |
 | [05](tdd-python/step-05) | RED | Test: shorter than 3 chars is invalid |
 | [06](tdd-python/step-06) | GREEN | Impl: enforce minimum length |
@@ -63,11 +63,16 @@ always reports a clear pass/fail, never a crash. The matching [VS Code snippets]
 | [09](tdd-python/step-09) | RED | Test: uppercase letters are invalid |
 | [10](tdd-python/step-10) | GREEN | Impl: enforce lowercase |
 | [11](tdd-python/step-11) | RED | Test: underscore is invalid |
-| [12](tdd-python/step-12) | GREEN | Impl: allowed-characters regex (ugly one-liner) |
-| [13](tdd-python/step-13) | RED (surprise) | Refactor into named helpers — introduces a `.match` vs `.fullmatch` bug |
-| [14](tdd-python/step-14) | GREEN | Fix: `.match` → `.fullmatch` |
-| [15](tdd-python/step-15) | RED | Test: a name shaped like an IP address is invalid |
-| [16](tdd-python/step-16) | GREEN | Impl: final version, ready to pivot to IaC |
+| [12](tdd-python/step-12) | GREEN | Impl: restrict to letters only (`str.isalpha`) |
+| [13](tdd-python/step-13) | RED | Test: a hyphen should be valid — letters-only was too strict |
+| [14](tdd-python/step-14) | GREEN | Impl: allow hyphen too (still a simple character check) |
+| [15](tdd-python/step-15) | RED | Test: digits should be valid |
+| [16](tdd-python/step-16) | GREEN | Impl: allow digits too (still a simple character check) |
+| [17](tdd-python/step-17) | RED (surprise) | Refactor: character checks become a regex — first-time mistake: `.match` instead of `.fullmatch` |
+| [18](tdd-python/step-18) | GREEN | Fix: `.match` → `.fullmatch` |
+| [19](tdd-python/step-19) | GREEN | Refactor: split into named helper functions (no new test, regex was already correct) |
+| [20](tdd-python/step-20) | RED | Test: a name shaped like an IP address is invalid |
+| [21](tdd-python/step-21) | GREEN | Impl: final version, ready to pivot to IaC |
 
 Run any step's tests with:
 

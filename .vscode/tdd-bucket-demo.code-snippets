@@ -42,7 +42,7 @@
     "body": [
       "",
       "def test_simple_lowercase_name_is_valid():",
-      "    result = is_valid_bucket_name(\"my-bucket\")",
+      "    result = is_valid_bucket_name(\"mybucket\")",
       "",
       "    assert result is True",
       "$0"
@@ -137,7 +137,7 @@
     ]
   },
 
-  "Step 11 - Test: allowed characters": {
+  "Step 11 - Test: underscore invalid": {
     "prefix": "py.step-11",
     "scope": "python",
     "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: underscore is invalid",
@@ -151,10 +151,96 @@
     ]
   },
 
-  "Step 12 - Impl: ugly one-liner": {
+  "Step 12 - Impl: letters only (simple search)": {
     "prefix": "py.step-12",
     "scope": "python",
-    "description": "-> bucket_name.py, SELECT ALL first. GREEN: strains readability, motivates the refactor",
+    "description": "-> bucket_name.py, SELECT ALL first. GREEN: dumbest fix, only lowercase letters allowed",
+    "body": [
+      "def is_valid_bucket_name(name: str) -> bool:",
+      "    return 3 <= len(name) <= 63 and name == name.lower() and name.isalpha()",
+      "$0"
+    ]
+  },
+
+  "Step 13 - Test: hyphen valid": {
+    "prefix": "py.step-13",
+    "scope": "python",
+    "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: letters-only was too strict, a hyphen must be allowed",
+    "body": [
+      "",
+      "def test_name_with_hyphen_is_valid():",
+      "    result = is_valid_bucket_name(\"my-bucket\")",
+      "",
+      "    assert result is True",
+      "$0"
+    ]
+  },
+
+  "Step 14 - Impl: allow hyphen too (simple search)": {
+    "prefix": "py.step-14",
+    "scope": "python",
+    "description": "-> bucket_name.py, SELECT ALL first. GREEN: still simple, no regex yet",
+    "body": [
+      "def is_valid_bucket_name(name: str) -> bool:",
+      "    return (",
+      "        3 <= len(name) <= 63",
+      "        and name == name.lower()",
+      "        and all(c.isalpha() or c == \"-\" for c in name)",
+      "    )",
+      "$0"
+    ]
+  },
+
+  "Step 15 - Test: digits valid": {
+    "prefix": "py.step-15",
+    "scope": "python",
+    "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: digits must be allowed too",
+    "body": [
+      "",
+      "def test_name_with_digits_is_valid():",
+      "    result = is_valid_bucket_name(\"my-bucket-1\")",
+      "",
+      "    assert result is True",
+      "$0"
+    ]
+  },
+
+  "Step 16 - Impl: allow digits too (simple search)": {
+    "prefix": "py.step-16",
+    "scope": "python",
+    "description": "-> bucket_name.py, SELECT ALL first. GREEN: still simple, growing character-by-character checks motivate the next refactor",
+    "body": [
+      "def is_valid_bucket_name(name: str) -> bool:",
+      "    return (",
+      "        3 <= len(name) <= 63",
+      "        and name == name.lower()",
+      "        and all(c.isalpha() or c.isdigit() or c == \"-\" for c in name)",
+      "    )",
+      "$0"
+    ]
+  },
+
+  "Step 17 - Refactor to regex, with hidden bug": {
+    "prefix": "py.step-17",
+    "scope": "python",
+    "description": "-> bucket_name.py, SELECT ALL first. RED (surprise): character-by-character checks become a regex, but '.match' instead of '.fullmatch' — an easy first-time mistake",
+    "body": [
+      "import re",
+      "",
+      "def is_valid_bucket_name(name: str) -> bool:",
+      "    return (",
+      "        3 <= len(name) <= 63",
+      "        and name == name.lower()",
+      "        and re.match(r\"[a-z0-9.-]+\", name) is not None",
+      "    )",
+      "$0"
+    ]
+  },
+
+  "Step 18 - Fix the refactor bug": {
+    "prefix": "py.step-18",
+    "scope": "python",
+    "description": "OPTIONAL SNIPPET: better to type the fix live (match -> fullmatch). -> bucket_name.py, SELECT ALL first. GREEN",
     "body": [
       "import re",
       "",
@@ -168,31 +254,10 @@
     ]
   },
 
-  "Step 13 - Refactor with hidden bug": {
-    "prefix": "py.step-13",
+  "Step 19 - Refactor: split into subfunctions": {
+    "prefix": "py.step-19",
     "scope": "python",
-    "description": "-> bucket_name.py, SELECT ALL first. RED (surprise): '.match' instead of '.fullmatch'",
-    "body": [
-      "import re",
-      "",
-      "ALLOWED_CHARACTERS = re.compile(r\"[a-z0-9.-]+\")",
-      "",
-      "def is_valid_bucket_name(name: str) -> bool:",
-      "    return has_valid_length(name) and has_valid_characters(name)",
-      "",
-      "def has_valid_length(name: str) -> bool:",
-      "    return 3 <= len(name) <= 63",
-      "",
-      "def has_valid_characters(name: str) -> bool:",
-      "    return ALLOWED_CHARACTERS.match(name) is not None",
-      "$0"
-    ]
-  },
-
-  "Step 14 - Fix the refactor bug": {
-    "prefix": "py.step-14",
-    "scope": "python",
-    "description": "OPTIONAL SNIPPET: better to type the fix live (match -> fullmatch). -> bucket_name.py, SELECT ALL first. GREEN",
+    "description": "-> bucket_name.py, SELECT ALL first. GREEN (pure refactor, no new test): the regex is now correct, so extracting helpers is safe",
     "body": [
       "import re",
       "",
@@ -210,8 +275,8 @@
     ]
   },
 
-  "Step 15 - Test: IP address shape": {
-    "prefix": "py.step-15",
+  "Step 20 - Test: IP address shape": {
+    "prefix": "py.step-20",
     "scope": "python",
     "description": "-> test_bucket_name.py, cursor at BOTTOM. RED: names shaped like an IP are invalid",
     "body": [
@@ -224,8 +289,8 @@
     ]
   },
 
-  "Step 16 - Impl: final version": {
-    "prefix": "py.step-16",
+  "Step 21 - Impl: final version": {
+    "prefix": "py.step-21",
     "scope": "python",
     "description": "-> bucket_name.py, SELECT ALL first. GREEN: end state, pivot to IaC",
     "body": [
