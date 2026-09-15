@@ -316,5 +316,32 @@
       "    return IP_ADDRESS_SHAPE.fullmatch(name) is not None",
       "$0"
     ]
+  },
+
+  "Step 22 - Refactor: reuse the tested is_ip_address": {
+    "prefix": "py.step-22",
+    "scope": "python",
+    "description": "-> bucket_name.py, SELECT ALL first. Also copy unit-test-python/is_ip_address.py into this folder. GREEN (no new test): our home-grown shape check is replaced by the properly tested is_ip_address, everything still passes",
+    "body": [
+      "import re",
+      "",
+      "from is_ip_address import is_ip_address",
+      "",
+      "ALLOWED_CHARACTERS = re.compile(r\"[a-z0-9.-]+\")",
+      "",
+      "def is_valid_bucket_name(name: str) -> bool:",
+      "    return (",
+      "        has_valid_length(name)",
+      "        and has_valid_characters(name)",
+      "        and not is_ip_address(name)",
+      "    )",
+      "",
+      "def has_valid_length(name: str) -> bool:",
+      "    return 3 <= len(name) <= 63",
+      "",
+      "def has_valid_characters(name: str) -> bool:",
+      "    return ALLOWED_CHARACTERS.fullmatch(name) is not None",
+      "$0"
+    ]
   }
 }

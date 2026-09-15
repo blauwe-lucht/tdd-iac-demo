@@ -41,6 +41,13 @@ To clean up:
 - Add one or two improvements using TDD: custom 404 page, health endpoint
 - Refactor: move inline index.html to file.
 
+## Unit test intro: `is_ip_address`
+
+[`unit-test-python/`](unit-test-python) is a small, finished (non-TDD) example for introducing what a unit test
+is before diving into the TDD kata below: a strict IPv4 validator (`is_ip_address.py`) with three tests
+(`test_is_ip_address.py`). It's deliberately unrelated to bucket names, and deliberately stricter than the
+shape-only IP check the kata below reaches for — that contrast gets reused in [step 22](tdd-python/step-22).
+
 ## TDD demo: `is_valid_bucket_name`
 
 [`tdd-python/`](tdd-python) contains a prerendered, step-by-step TDD kata that builds up a function validating S3
@@ -48,7 +55,7 @@ bucket names. Each `step-NN` directory is a complete, runnable snapshot: `test_b
 `bucket_name.py`. Every step is either RED (a failing test drives the next bit of behaviour) or GREEN (the simplest
 implementation that satisfies all tests so far) — running `pytest` inside a step directory always compiles and
 always reports a clear pass/fail, never a crash. The matching [VS Code snippets](.vscode/tdd-bucket-demo.code-snippets)
-(`py.step-01` .. `py.step-21`) let you type the same progression live instead of jumping between directories.
+(`py.step-01` .. `py.step-22`) let you type the same progression live instead of jumping between directories.
 
 | Step | State | What changes |
 | --- | --- | --- |
@@ -73,6 +80,7 @@ always reports a clear pass/fail, never a crash. The matching [VS Code snippets]
 | [19](tdd-python/step-19) | GREEN | Refactor: split into named helper functions (no new test, regex was already correct) |
 | [20](tdd-python/step-20) | RED | Test: a name shaped like an IP address is invalid |
 | [21](tdd-python/step-21) | GREEN | Impl: final version, ready to pivot to IaC |
+| [22](tdd-python/step-22) | GREEN | Refactor: replace `looks_like_ip_address` with the properly tested [`is_ip_address`](unit-test-python/is_ip_address.py) (no new test, everything still passes) |
 
 Run any step's tests with:
 
