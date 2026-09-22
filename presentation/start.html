@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test Driven Development in Infrastructure as Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+  <style>
+    :root {
+      --bg-top: #0d1117;
+      --bg-bottom: #161b22;
+      --text: #f3f4f6;
+      --muted: #8b949e;
+      --green: #3fb950;
+      --red: #f85149;
+      --blue: #58a6ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: var(--bg-top);
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Sans', Arial, sans-serif;
+    }
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(165deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      color: var(--text);
+      padding: 8vh 8vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cycle {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .cycle-item {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex: none;
+    }
+
+    .dot.red {
+      background: var(--red);
+    }
+
+    .dot.green {
+      background: var(--green);
+    }
+
+    .dot.blue {
+      background: var(--blue);
+    }
+
+    .cycle-item span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(14px, 1.4vw, 24px);
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      margin: 0 auto;
+      max-width: 1550px;
+    }
+
+    h1 {
+      font-family: 'IBM Plex Sans', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(32px, 5.6vw, 92px);
+      line-height: 1.15;
+      margin: 0;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      font-size: clamp(16px, 1.8vw, 32px);
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin: 0;
+      text-align: center;
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    .meta .date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(14px, 1.6vw, 28px);
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .meta .presenter {
+      font-size: clamp(18px, 2vw, 36px);
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .meta .presenter .org {
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <section class="slide">
+    <div class="cycle">
+      <div class="cycle-item"><span class="dot red"></span><span>Red</span></div>
+      <div class="cycle-item"><span class="dot green"></span><span>Green</span></div>
+      <div class="cycle-item"><span class="dot blue"></span><span>Refactor</span></div>
+    </div>
+
+    <div class="title-block">
+      <h1>Test Driven Development<br>in<br>Infrastructure as Code</h1>
+      <p class="subtitle">- van vertrouwen naar bewijs -</p>
+    </div>
+
+    <div class="meta">
+      <p class="date">September 2026</p>
+      <p class="presenter">Sebastiaan Megens <span class="org">&mdash; Blauwe Lucht</span></p>
+    </div>
+  </section>
+</body>
+
+</html>
