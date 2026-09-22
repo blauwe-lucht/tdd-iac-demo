@@ -37,6 +37,7 @@ a `tdd-iac` step, since no code changes yet.
 | [03](step-03) | GREEN | Impl: nginx site config (`files/etc/nginx/sites-available/default`) adds a `/health` location, reloaded via a handler. |
 | [04](step-04) | RED | Test: an off-box request for an unknown path must return `404` with a neutral, custom body — not nginx's stock page. |
 | [05](step-05) | GREEN | Impl: a neutral `404.html` plus `error_page 404 /404.html;` in the site config. |
+| [06](step-06) | GREEN (refactor) | Externalize the inline `index.html` from `playbook.yml` into `files/var/www/html/index.html`, same as the other served files. No test changes — the point of a refactor step is that nothing here should need one. |
 
 Bonus catches along the way:
 - **Step 4, while RED**: nginx's `try_files ... =404` already returns status
