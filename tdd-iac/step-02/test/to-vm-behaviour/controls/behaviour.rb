@@ -17,3 +17,14 @@ control 'index-reachable-over-network-is-neutral' do
     its('body') { should_not match(/nginx/i) }
   end
 end
+
+control 'health-endpoint-reachable' do
+  impact 1.0
+  title 'the /health endpoint is reachable from an external client'
+  desc 'An HTTP request to /health from off-box must return 200 with a plain "ok" body.'
+
+  describe http("#{VM_URL}health", open_timeout: 2, read_timeout: 2) do
+    its('status') { should cmp 200 }
+    its('body') { should match(/^ok/) }
+  end
+end

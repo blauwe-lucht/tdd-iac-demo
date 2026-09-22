@@ -2,7 +2,7 @@ services:
   vm1:
     build:
       context: .
-      dockerfile: v1/Dockerfile
+      dockerfile: v2/Dockerfile
     container_name: demo-vm1
     hostname: vm1
     privileged: true

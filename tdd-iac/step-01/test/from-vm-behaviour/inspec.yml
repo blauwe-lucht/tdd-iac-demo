@@ -1,0 +1,11 @@
+name: from-vm-behaviour
+title: Behaviour, observed from the VM
+maintainer: tdd-iac-demo
+summary: >-
+  Exercises the running server from the box itself (HTTP to localhost).
+  Catches a page that differs from what was declared (e.g. the default nginx
+  page still being served). Still blind to anything on the network path
+  between a client and the VM.
+version: 1.0.0
+supports:
+  - platform: debian
