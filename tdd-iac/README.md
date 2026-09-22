@@ -34,9 +34,15 @@ a `tdd-iac` step, since no code changes yet.
 | --- | --- | --- |
 | [01](step-01) | GREEN | Fix: open `tcp dport 80` in nftables, reload the firewall. Resolves the RED above. Assumes v2 (`/etc/nftables.conf` exists) — the kata doesn't go back to v1 from here on, so the playbook doesn't guard for it. |
 | [02](step-02) | RED | Test: an off-box `GET /health` must return `200` with a plain `ok` body. |
-| [03](step-03) | GREEN | Impl: nginx site config (`files/default`) adds a `/health` location, reloaded via a handler. |
+| [03](step-03) | GREEN | Impl: nginx site config (`files/etc/nginx/sites-available/default`) adds a `/health` location, reloaded via a handler. |
+| [04](step-04) | RED | Test: an off-box request for an unknown path must return `404` with a neutral, custom body — not nginx's stock page. |
+| [05](step-05) | GREEN | Impl: a neutral `404.html` plus `error_page 404 /404.html;` in the site config. |
 
 Bonus catches along the way:
+- **Step 4, while RED**: nginx's `try_files ... =404` already returns status
+  `404` (that half of the control already passes) — but the *body* is still
+  the stock nginx page, which names `nginx`. A status-only check would have
+  missed it; the body assertion is what actually drives the fix.
 - **Step 2, while RED**: the stock nginx 404 page (what `/health` returns
   before step-03) names `nginx` in its body — the same leak the index-page
   tests already guard against, just not yet covered for other paths.

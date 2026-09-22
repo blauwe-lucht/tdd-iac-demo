@@ -1,0 +1,63 @@
+---
+- name: Install nginx on the demo-vm
+  hosts: demo
+  become: true
+
+  tasks:
+    - name: Install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Ensure nginx is started and enabled
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Replace the default index page with a neutral one
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8">
+              <title>Welcome</title>
+            </head>
+            <body>
+              <h1>It works.</h1>
+              <p>This site is up and running.</p>
+            </body>
+          </html>
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Allow inbound HTTP through the firewall
+      ansible.builtin.lineinfile:
+        path: /etc/nftables.conf
+        line: '        tcp dport 80 accept'
+        insertafter: 'tcp dport 22 accept'
+      notify: Reload nftables
+
+    - name: Deploy nginx site configuration (adds the /health endpoint)
+      ansible.builtin.copy:
+        src: etc/nginx/sites-available/default
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Reload nginx
+
+  handlers:
+    - name: Reload nftables
+      ansible.builtin.service:
+        name: nftables
+        state: reloaded
+
+    - name: Reload nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded

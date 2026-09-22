@@ -1,0 +1,42 @@
+# BEHAVIOUR, observed FROM an external client (TO the VM).
+# The `http` resource runs on the RUNNER, not the target, so the request
+# crosses the network exactly as a real client's would. This is the rung that
+# catches loopback-only binds and firewall rules that a localhost probe on the
+# VM passes right through.
+
+VM_URL = 'http://172.28.0.11/'.freeze
+
+control 'index-reachable-over-network-is-neutral' do
+  impact 1.0
+  title 'the neutral index page is reachable from an external client'
+  desc 'An HTTP request from off-box must return the neutral page and name no web server.'
+
+  describe http(VM_URL, open_timeout: 2, read_timeout: 2) do
+    its('status') { should cmp 200 }
+    its('body') { should match(/It works\./) }
+    its('body') { should_not match(/nginx/i) }
+  end
+end
+
+control 'health-endpoint-reachable' do
+  impact 1.0
+  title 'the /health endpoint is reachable from an external client'
+  desc 'An HTTP request to /health from off-box must return 200 with a plain "ok" body.'
+
+  describe http("#{VM_URL}health", open_timeout: 2, read_timeout: 2) do
+    its('status') { should cmp 200 }
+    its('body') { should match(/^ok/) }
+  end
+end
+
+control 'custom-404-page-is-neutral' do
+  impact 1.0
+  title 'unknown paths get the custom 404 page, which names no web server'
+  desc 'An HTTP request for a nonexistent path from off-box must return 404 with a neutral page and name no web server.'
+
+  describe http("#{VM_URL}nope", open_timeout: 2, read_timeout: 2) do
+    its('status') { should cmp 404 }
+    its('body') { should match(/Page not found\./) }
+    its('body') { should_not match(/nginx/i) }
+  end
+end
